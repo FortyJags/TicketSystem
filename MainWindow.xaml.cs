@@ -1,18 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.IO;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace TicketSystem
 {
@@ -41,7 +31,7 @@ namespace TicketSystem
                 _orderedItems += item;
                 Debug.WriteLine(item);
             }
-            MessageBox.Show(_orderedItems);
+            RunStockChecker(@"C:\CodingProjects\TicketSystemPython\StockCheck.py");
 
         }
 
@@ -58,6 +48,30 @@ namespace TicketSystem
 
             }
 
+        }
+
+
+
+        private void RunStockChecker(string filePath)
+        {
+            ProcessStartInfo startInfo = new();
+            //FIleName used to indicate what executable to run the code on
+            startInfo.FileName = "python.exe";
+            //Add any arguments here using string.Format
+            startInfo.Arguments = filePath;
+            //set to false to redirect output to C# code
+            startInfo.UseShellExecute = false;
+            startInfo.RedirectStandardOutput = true;
+
+            using (Process process = Process.Start(startInfo))
+            {
+                using(StreamReader reader = process.StandardOutput)
+                {
+                    string result = reader.ReadToEnd();
+                    Debug.WriteLine(result);
+                }
+
+            }
         }
     }
 }
