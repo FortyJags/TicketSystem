@@ -8,6 +8,6 @@ namespace TicketSystem
 {
     public class MenuItems
     {
-        public enum Items { Burger, Chips, Salad, Milkshake}
+        public enum Items { Burger, Chips, Salad, Milkshake, StirFry, Pizza, Cake}
     }
 }

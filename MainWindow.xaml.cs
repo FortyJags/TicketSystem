@@ -32,7 +32,7 @@ namespace TicketSystem
             _customerOrder = new();
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void GenearateTicket_Click(object sender, RoutedEventArgs e)
         {
             string _orderedItems = String.Empty;
 
@@ -45,10 +45,19 @@ namespace TicketSystem
 
         }
 
-        private void Button_Click_1(object sender, RoutedEventArgs e)
+           //create a senderButton variable to get the content of the button. Pass the content through a switch to determine which button was pressed
+
+        private void Additem_Click(object sender, RoutedEventArgs e)
         {
-            _customerOrder.CurrentOrder.Add(MenuItems.Items.Burger);
-            MessageBox.Show($"{_customerOrder.CurrentOrder.Count}");
+            var senderButton = sender as Button;
+
+            switch (senderButton!.Content.ToString())
+            {
+                case "Burger": _customerOrder.CurrentOrder.Add(MenuItems.Items.Burger);break;
+                case "Cake": _customerOrder.CurrentOrder.Add(MenuItems.Items.Cake);break;
+
+            }
+
         }
     }
 }
