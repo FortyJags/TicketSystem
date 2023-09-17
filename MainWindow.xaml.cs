@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Documents;
 
 namespace TicketSystem
 {
@@ -29,7 +30,7 @@ namespace TicketSystem
             foreach(var item in _customerOrder.CurrentOrder)
             {
                 _orderedItems += item;
-                Debug.WriteLine(item);
+               
             }
             RunStockChecker(@"C:\CodingProjects\TicketSystemPython\StockCheck.py");
 
@@ -43,22 +44,26 @@ namespace TicketSystem
 
             switch (senderButton!.Content.ToString())
             {
-                case "Burger": _customerOrder.CurrentOrder.Add(MenuItems.Items.Burger);break;
-                case "Cake": _customerOrder.CurrentOrder.Add(MenuItems.Items.Cake);break;
+                case "Burger": _customerOrder.CurrentOrder.Add(MenuItems.Items.Burger.ToString());break;
+                case "Cake": _customerOrder.CurrentOrder.Add(MenuItems.Items.Cake.ToString());break;
 
             }
 
         }
 
+   
 
 
         private void RunStockChecker(string filePath)
         {
             ProcessStartInfo startInfo = new();
-            //FIleName used to indicate what executable to run the code on
+            //FileName used to indicate what executable to run the code on
             startInfo.FileName = "python.exe";
             //Add any arguments here using string.Format
-            startInfo.Arguments = filePath;
+            startInfo.Arguments = string.Format("\"{0}\"{1}", filePath, _customerOrder.CurrentOrder);
+
+            Debug.WriteLine(_customerOrder.CurrentOrder.Count);
+
             //set to false to redirect output to C# code
             startInfo.UseShellExecute = false;
             startInfo.RedirectStandardOutput = true;
@@ -68,7 +73,7 @@ namespace TicketSystem
                 using(StreamReader reader = process.StandardOutput)
                 {
                     string result = reader.ReadToEnd();
-                    Debug.WriteLine(result);
+                    Debug.WriteLine($"Python returned: {result}");
                 }
 
             }
