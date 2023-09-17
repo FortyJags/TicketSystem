@@ -12,14 +12,12 @@ namespace TicketSystem
     /// </summary>
     public partial class MainWindow : Window
     {
-        private readonly MenuItems _items;
         private readonly Order _customerOrder;
 
 
         public MainWindow()
         {
-            InitializeComponent();
-            _items = new();
+            InitializeComponent();           
             _customerOrder = new();
         }
 
@@ -32,7 +30,7 @@ namespace TicketSystem
                 _orderedItems += item;
                
             }
-            RunStockChecker(@"C:\CodingProjects\TicketSystemPython\StockCheck.py");
+            RunStockChecker(@"C:\CodingProjects\TicketSystemPython\StockCheck.py", "Cake");
 
         }
 
@@ -44,8 +42,8 @@ namespace TicketSystem
 
             switch (senderButton!.Content.ToString())
             {
-                case "Burger": _customerOrder.CurrentOrder.Add(MenuItems.Items.Burger.ToString());break;
-                case "Cake": _customerOrder.CurrentOrder.Add(MenuItems.Items.Cake.ToString());break;
+                case "Burger": _customerOrder.CurrentOrder.Add("Burger");break;
+                case "Cake": _customerOrder.CurrentOrder.Add("Cake");break;
 
             }
 
@@ -54,16 +52,14 @@ namespace TicketSystem
    
 
 
-        private void RunStockChecker(string filePath)
+        private void RunStockChecker(string filePath, string arguments)
         {
             ProcessStartInfo startInfo = new();
             //FileName used to indicate what executable to run the code on
             startInfo.FileName = "python.exe";
-            //Add any arguments here using string.Format
-            startInfo.Arguments = string.Format("\"{0}\"{1}", filePath, _customerOrder.CurrentOrder);
-
-            Debug.WriteLine(_customerOrder.CurrentOrder.Count);
-
+         
+            startInfo.Arguments = string.Format("\"{0}\" {1}", filePath, arguments);
+           
             //set to false to redirect output to C# code
             startInfo.UseShellExecute = false;
             startInfo.RedirectStandardOutput = true;
