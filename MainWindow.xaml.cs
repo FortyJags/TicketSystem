@@ -13,6 +13,7 @@ namespace TicketSystem
     public partial class MainWindow : Window
     {
         private readonly Order _customerOrder;
+        private string[] completeOrder;
 
 
         public MainWindow()
@@ -29,9 +30,8 @@ namespace TicketSystem
             {
                 _orderedItems += item;
                
-            }
-            RunStockChecker(@"C:\CodingProjects\TicketSystemPython\StockCheck.py", "Cake");
-
+            }          
+                 
         }
 
            //create a senderButton variable to get the content of the button. Pass the content through a switch to determine which button was pressed
@@ -42,23 +42,24 @@ namespace TicketSystem
 
             switch (senderButton!.Content.ToString())
             {
-                case "Burger": _customerOrder.CurrentOrder.Add("Burger");break;
-                case "Cake": _customerOrder.CurrentOrder.Add("Cake");break;
+                case "Burger": _customerOrder.CurrentOrder.Add("Burger"); RunStockChecker(@"C:\CodingProjects\TicketSystemPython\StockCheck.py", "Burger"); break;
+                case "Cake": _customerOrder.CurrentOrder.Add("Cake"); RunStockChecker(@"C:\CodingProjects\TicketSystemPython\StockCheck.py", "Cake"); break;
 
             }
+           
 
         }
 
-   
+     
 
 
-        private void RunStockChecker(string filePath, string arguments)
+        private void RunStockChecker(string filePath, string argument)
         {
             ProcessStartInfo startInfo = new();
             //FileName used to indicate what executable to run the code on
             startInfo.FileName = "python.exe";
          
-            startInfo.Arguments = string.Format("\"{0}\" {1}", filePath, arguments);
+            startInfo.Arguments = string.Format("\"{0}\" {1}", filePath, argument);
            
             //set to false to redirect output to C# code
             startInfo.UseShellExecute = false;

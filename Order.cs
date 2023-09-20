@@ -8,7 +8,7 @@ namespace TicketSystem
 {
     public class Order
     {
-        public List<string> CurrentOrder {  get; set; }
+        public List<string> CurrentOrder;
 
         public Order()
         {
