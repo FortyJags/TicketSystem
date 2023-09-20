@@ -14,6 +14,8 @@ namespace TicketSystem
     {
         private readonly Order _customerOrder;
         private string _stockCheckPath = @"C:\CodingProjects\TicketSystemPython\StockCheck.py";
+        private int _currentOrderNumber = 0;
+        private bool _newOrder;
         
 
 
@@ -22,6 +24,7 @@ namespace TicketSystem
             InitializeComponent();           
             _customerOrder = new();
             DataContext = Order;
+            _newOrder = true;
         }
 
         private void GenearateTicket_Click(object sender, RoutedEventArgs e)
@@ -30,10 +33,12 @@ namespace TicketSystem
 
             foreach(var item in _customerOrder.CurrentOrder)
             {
-                _orderedItems += item;
-               
-            }          
-                 
+                _orderedItems += item;               
+            }
+            _newOrder = true;
+            _customerOrder.OrderAsList = "Order complete";
+            Order.Text = _customerOrder.OrderAsList;
+
         }
 
            //create a senderButton variable to get the content of the button. Pass the content through a switch to determine which button was pressed
@@ -81,9 +86,14 @@ namespace TicketSystem
 
         private void DisplayOrder()
         {
-
-            _customerOrder.OrderAsList = $"Customer order no: \n";
-            foreach(var item  in _customerOrder.CurrentOrder)
+            if(_newOrder == true)
+            {
+                _currentOrderNumber = GenerateOrderNumber();
+                
+            }
+            _customerOrder.OrderAsList = $"Customer order no: {_currentOrderNumber} \n";
+            Debug.WriteLine(_currentOrderNumber);
+            foreach (var item  in _customerOrder.CurrentOrder)
             {
                 _customerOrder.OrderAsList += $"* {item}\n";
             }
@@ -92,5 +102,14 @@ namespace TicketSystem
             Order.Text = _customerOrder.OrderAsList;
         }
 
+        private int GenerateOrderNumber()
+        {
+            _newOrder = false;        
+            return _currentOrderNumber++;      
+
+        }
+
+
+
+        }
     }
-}
