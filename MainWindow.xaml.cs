@@ -13,13 +13,15 @@ namespace TicketSystem
     public partial class MainWindow : Window
     {
         private readonly Order _customerOrder;
-        private string[] completeOrder;
+        private string _stockCheckPath = @"C:\CodingProjects\TicketSystemPython\StockCheck.py";
+        
 
 
         public MainWindow()
         {
             InitializeComponent();           
             _customerOrder = new();
+            DataContext = Order;
         }
 
         private void GenearateTicket_Click(object sender, RoutedEventArgs e)
@@ -42,11 +44,11 @@ namespace TicketSystem
 
             switch (senderButton!.Content.ToString())
             {
-                case "Burger": _customerOrder.CurrentOrder.Add("Burger"); RunStockChecker(@"C:\CodingProjects\TicketSystemPython\StockCheck.py", "Burger"); break;
-                case "Cake": _customerOrder.CurrentOrder.Add("Cake"); RunStockChecker(@"C:\CodingProjects\TicketSystemPython\StockCheck.py", "Cake"); break;
+                case "Burger": _customerOrder.CurrentOrder.Add("Burger"); RunStockChecker(_stockCheckPath, "Burger"); break;
+                case "Cake": _customerOrder.CurrentOrder.Add("Cake"); RunStockChecker(_stockCheckPath, "Cake"); break;
 
             }
-           
+            DisplayOrder();
 
         }
 
@@ -65,7 +67,7 @@ namespace TicketSystem
             startInfo.UseShellExecute = false;
             startInfo.RedirectStandardOutput = true;
 
-            using (Process process = Process.Start(startInfo))
+            using (Process process = Process.Start(startInfo)!)
             {
                 using(StreamReader reader = process.StandardOutput)
                 {
@@ -75,5 +77,20 @@ namespace TicketSystem
 
             }
         }
+
+
+        private void DisplayOrder()
+        {
+
+            _customerOrder.OrderAsList = $"Customer order no: \n";
+            foreach(var item  in _customerOrder.CurrentOrder)
+            {
+                _customerOrder.OrderAsList += $"* {item}\n";
+            }
+            
+
+            Order.Text = _customerOrder.OrderAsList;
+        }
+
     }
 }

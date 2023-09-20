@@ -9,10 +9,13 @@ namespace TicketSystem
     public class Order
     {
         public List<string> CurrentOrder;
+        public string OrderAsList { get; set; }
 
         public Order()
         {
            CurrentOrder = new List<string>();
+
+
         }
 
 
