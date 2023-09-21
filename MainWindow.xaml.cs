@@ -16,32 +16,26 @@ namespace TicketSystem
         private string _stockCheckPath = @"C:\CodingProjects\TicketSystemPython\StockCheck.py";
         private int _currentOrderNumber = 0;
         private bool _newOrder;
-        
+
 
 
         public MainWindow()
         {
-            InitializeComponent();           
+            InitializeComponent();
             _customerOrder = new();
             DataContext = Order;
-            _newOrder = true;
+            _newOrder = false;
         }
 
         private void GenearateTicket_Click(object sender, RoutedEventArgs e)
         {
-            string _orderedItems = String.Empty;
-
-            foreach(var item in _customerOrder.CurrentOrder)
-            {
-                _orderedItems += item;               
-            }
             _newOrder = true;
             _customerOrder.OrderAsList = "Order complete";
             Order.Text = _customerOrder.OrderAsList;
 
         }
 
-           //create a senderButton variable to get the content of the button. Pass the content through a switch to determine which button was pressed
+        //create a senderButton variable to get the content of the button. Pass the content through a switch to determine which button was pressed
 
         private void Additem_Click(object sender, RoutedEventArgs e)
         {
@@ -57,7 +51,7 @@ namespace TicketSystem
 
         }
 
-     
+
 
 
         private void RunStockChecker(string filePath, string argument)
@@ -65,16 +59,16 @@ namespace TicketSystem
             ProcessStartInfo startInfo = new();
             //FileName used to indicate what executable to run the code on
             startInfo.FileName = "python.exe";
-         
+
             startInfo.Arguments = string.Format("\"{0}\" {1}", filePath, argument);
-           
+
             //set to false to redirect output to C# code
             startInfo.UseShellExecute = false;
             startInfo.RedirectStandardOutput = true;
 
             using (Process process = Process.Start(startInfo)!)
             {
-                using(StreamReader reader = process.StandardOutput)
+                using (StreamReader reader = process.StandardOutput)
                 {
                     string result = reader.ReadToEnd();
                     Debug.WriteLine($"Python returned: {result}");
@@ -86,30 +80,45 @@ namespace TicketSystem
 
         private void DisplayOrder()
         {
-            if(_newOrder == true)
+            if (_newOrder == true)
             {
-                _currentOrderNumber = GenerateOrderNumber();
-                
+                GenerateNewOrder();
+                UpdateOrderDisplay(); 
             }
+            else
+            {
+                UpdateOrderDisplay();
+            }
+           
+
+
+        }
+
+        private void GenerateNewOrder()
+        {
+            _newOrder = false;
+            _currentOrderNumber++;
+            _newOrder = false;
+            // _customerOrder.OrderAsList = " ";
+            _customerOrder.CurrentOrder.Clear();
+            Debug.WriteLine("Order changed");
+
+        }
+
+        private void UpdateOrderDisplay()
+        {
             _customerOrder.OrderAsList = $"Customer order no: {_currentOrderNumber} \n";
             Debug.WriteLine(_currentOrderNumber);
-            foreach (var item  in _customerOrder.CurrentOrder)
+            foreach (var item in _customerOrder.CurrentOrder)
             {
                 _customerOrder.OrderAsList += $"* {item}\n";
             }
-            
+
 
             Order.Text = _customerOrder.OrderAsList;
         }
 
-        private int GenerateOrderNumber()
-        {
-            _newOrder = false;        
-            return _currentOrderNumber++;      
-
-        }
-
-
+    
 
         }
     }
