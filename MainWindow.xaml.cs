@@ -107,8 +107,7 @@ namespace TicketSystem
 
         private void UpdateOrderDisplay()
         {
-            _customerOrder.OrderAsList = $"Customer order no: {_currentOrderNumber} \n";
-            Debug.WriteLine(_currentOrderNumber);
+            _customerOrder.OrderAsList = $"Customer order no: {_currentOrderNumber} \n";           
             foreach (var item in _customerOrder.CurrentOrder)
             {
                 _customerOrder.OrderAsList += $"* {item}\n";
