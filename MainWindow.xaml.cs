@@ -89,8 +89,7 @@ namespace TicketSystem
             else
             {
                 UpdateOrderDisplay();
-            }
-           
+            }          
 
 
         }
