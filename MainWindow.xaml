@@ -33,8 +33,15 @@
                 <RowDefinition/>
             </Grid.RowDefinitions>
 
+            
+            <Button Style="{StaticResource Item Button}" HorizontalAlignment="Left" Content="{Binding Path=Item1}" Click="Additem_Click" Grid.Row="0">
+                <Button.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="Click me" Click="ChangeName_Click"/>
+                </ContextMenu>
+                </Button.ContextMenu>
+            </Button>
            
-            <Button Style="{StaticResource Item Button}" HorizontalAlignment="Left" Content="Burger" Click="Additem_Click" Grid.Row="0"/>
             <Button  Style="{StaticResource Item Button}" HorizontalAlignment="Right" Content="Cake" Click="Additem_Click"/>
             <Button  Style="{StaticResource Item Button}" Content="Cake" Click="Additem_Click"/>
             <Button  Style="{StaticResource Item Button}" HorizontalAlignment="Right" Content="Cheese" Click="Additem_Click" Grid.Row="1"/>

@@ -16,7 +16,7 @@ namespace TicketSystem
         private string _stockCheckPath = @"C:\CodingProjects\TicketSystemPython\StockCheck.py";
         private int _currentOrderNumber = 0;
         private bool _newOrder;
-
+        private ChangeName _changeName;
 
 
         public MainWindow()
@@ -25,6 +25,7 @@ namespace TicketSystem
             _customerOrder = new();
             DataContext = Order;
             _newOrder = false;
+            _changeName = new();
         }
 
         private void GenearateTicket_Click(object sender, RoutedEventArgs e)
@@ -116,7 +117,12 @@ namespace TicketSystem
             Debug.WriteLine(_customerOrder.OrderAsList);
         }
 
-    
+        private void ChangeName_Click(object sender, RoutedEventArgs e)
+        {
+
+            _changeName.Activate();
+            _changeName.Show();
 
         }
+    }
     }
