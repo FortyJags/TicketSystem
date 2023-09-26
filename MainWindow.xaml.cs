@@ -32,6 +32,7 @@ namespace TicketSystem
             _newOrder = true;
             _customerOrder.OrderAsList = "Order complete";
             Order.Text = _customerOrder.OrderAsList;
+            _customerOrder.CurrentOrder.Clear();
 
         }
 
@@ -98,23 +99,22 @@ namespace TicketSystem
         {
             _newOrder = false;
             _currentOrderNumber++;
-            _newOrder = false;
-            // _customerOrder.OrderAsList = " ";
-            _customerOrder.CurrentOrder.Clear();
+            _newOrder = false;     
+          
             Debug.WriteLine("Order changed");
 
         }
 
         private void UpdateOrderDisplay()
         {
-            _customerOrder.OrderAsList = $"Customer order no: {_currentOrderNumber} \n";           
+            _customerOrder.OrderAsList = $"Customer order no: {_currentOrderNumber} \n";   
+           
             foreach (var item in _customerOrder.CurrentOrder)
             {
                 _customerOrder.OrderAsList += $"* {item}\n";
             }
-
-
             Order.Text = _customerOrder.OrderAsList;
+            Debug.WriteLine(_customerOrder.OrderAsList);
         }
 
     
