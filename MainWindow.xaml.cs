@@ -17,13 +17,15 @@ namespace TicketSystem
         private int _currentOrderNumber = 0;
         private bool _newOrder;
         private ChangeName _changeName;
+        private MenuItem _menuItems;
 
 
         public MainWindow()
         {
             InitializeComponent();
             _customerOrder = new();
-            DataContext = Order;
+            _menuItems = new();
+            DataContext = _menuItems;
             _newOrder = false;
             _changeName = new();
         }
@@ -47,6 +49,7 @@ namespace TicketSystem
             {
                 case "Burger": _customerOrder.CurrentOrder.Add("Burger"); RunStockChecker(_stockCheckPath, "Burger"); break;
                 case "Cake": _customerOrder.CurrentOrder.Add("Cake"); RunStockChecker(_stockCheckPath, "Cake"); break;
+                default: Debug.Write("Not an option"); break;
 
             }
             DisplayOrder();

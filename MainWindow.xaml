@@ -53,7 +53,7 @@
             
             
         </Grid>
-        <TextBlock Name="Order" Text="{Binding OrderAsList}"/>
+        <TextBlock Name="Order"/>
         <Button Height="100" Width="100" Content="Generate Ticket" Click="GenearateTicket_Click" Grid.Column="2" Grid.Row="2"/>
     </Grid>
 </Window>
